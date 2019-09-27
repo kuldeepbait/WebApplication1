@@ -1,0 +1,29 @@
+﻿
+<html>
+  <head>
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+      <script src="~/Scripts/jquery-3.4.1.min.js"></script>
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+      <script src="~/Scripts/jquery.validate.min.js"></script>
+      <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+      <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+  </head>
+<body>
+    <div>
+        @Html.ActionLink("Employee Menu", "IndexClientSide", "Employee")
+        @Html.ActionLink("Finance Menu", "IndexClientSide", "Finance")
+    </div>
+    <div id="MainContainer">
+        @RenderBody()
+    </div>
+</body>
+</html>
+
+<script>
+    $(document).bind('ajaxSend', function (e, request, options) {
+        debugger;
+    });
+    $(document).ajaxComplete(function (event, xhr, settings) {
+        debugger;
+    });
+</script>

@@ -1,0 +1,36 @@
+﻿@model IEnumerable<WebApplication1.DLL.Employee>
+
+@{
+    var grid = new WebGrid(Model, canPage: true, rowsPerPage: 50,
+    selectionFieldName: "selectedRow", ajaxUpdateContainerId: "gridContent");
+    grid.Pager(WebGridPagerModes.All);
+    }
+
+
+<br />
+<br />
+
+<div class="row">
+    <div class="col-md-2"></div>
+    <div class="col-md-8">
+        @grid.Table(
+                tableStyle: "table table-responsive table-bordered",
+                columns: grid.Columns(
+                    grid.Column(columnName: "EmpId", header: "EmpId"),
+                    grid.Column(columnName: "EmpName", header: "EmpName"),
+                    grid.Column(columnName: "EmpSalary", header: "EmpSalary"),
+                     grid.Column(columnName: "", header: "Edit", format:@<text><a><i class="glyphicon glyphicon-pencil" data-id="@item.EmpId"></i></a></text>),
+                    grid.Column(columnName: "", header: "Delete", format:@<text><a><i class="glyphicon glyphicon-trash" data-id="@item.EmpId"></i></a></text>)
+
+                )
+            )
+        @Html.Hidden("dir", grid.SortDirection)
+        @Html.Hidden("col", grid.SortColumn)
+    </div>
+    <div class="col-md-2"></div>
+</div>
+
+
+
+
+

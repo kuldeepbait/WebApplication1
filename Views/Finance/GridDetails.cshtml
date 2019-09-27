@@ -1,0 +1,99 @@
+﻿
+@model WebApplication1.Models.EmployeeModel
+@{
+    var grid = new WebGrid(ViewBag.EmployeeList, canPage: true, rowsPerPage: 50,
+    selectionFieldName: "selectedRow", ajaxUpdateContainerId: "gridContent");
+    grid.Pager(WebGridPagerModes.All);
+}
+
+
+<br />
+<br />
+
+<div class="row">
+    <div class="col-md-2"></div>
+    <div class="col-md-8">
+        @grid.Table(
+                tableStyle: "table table-responsive table-bordered",
+                columns: grid.Columns(
+                    grid.Column(columnName: "EmpId", header: "EmpId"),
+                    grid.Column(columnName: "EmpName", header: "EmpName"),
+                    grid.Column(columnName: "EmpSalary", header: "EmpSalary"),
+                     grid.Column(columnName: "", header: "Edit", format:@<text><a><i class="glyphicon glyphicon-pencil" data-id="@item.EmpId"></i></a></text>),
+                    grid.Column(columnName: "", header: "Delete", format:@<text><a><i class="glyphicon glyphicon-trash" data-id="@item.EmpId"></i></a></text>)
+
+                )
+            )
+        @Html.Hidden("dir", grid.SortDirection)
+        @Html.Hidden("col", grid.SortColumn)
+    </div>
+    <div class="col-md-2"></div>
+</div>
+
+<script>
+    $(".glyphicon-pencil").click(function () {
+        debugger;
+        var empId = $(this).attr("data-id");
+        GetFormDetails(empId);
+        return false;
+    });
+    $(".glyphicon-trash").click(function () {
+        debugger;
+        var empId = $(this).attr("data-id");
+        DeleteGrid(empId);
+        return false;
+    });
+    function DeleteGrid(empId) {
+        debugger;
+        $.ajax({
+            url: '@Url.Action("DeleteGrid", "Finance" )',
+            type: "POST",
+            data: { id: empId },
+            success: function (data) {
+                debugger;
+
+                BindGrid();
+            },
+            error: function (obj) {
+                debugger;
+                alert("Error while inserting data");
+            }
+        });
+    }
+
+    function GetFormDetails(empId) {
+        debugger;
+        $.ajax({
+            url: '@Url.Action("GetFormDetails", "Finance" )',
+            type: "Get",
+            data: { id: empId },
+            success: function (data) {
+                debugger;
+                $('.container').hide();
+                $('#formId').html(data);
+            },
+            error: function (obj) {
+                debugger;
+                alert("Error while inserting data");
+            }
+        });
+    }
+    function BindForm() {
+        debugger;
+        $.ajax({
+            type: "Get",
+            url: '@Url.Action("GetFormDetailClientSide", "Finance")',
+           // data: { id: empId },
+            success: function (data) {
+                debugger;
+                $('.container').hide();
+                $('#formId').html(data)
+              //  $.validator.unobstrusive.parse($('#formPostId'));
+            },
+            error: function () {
+                alert("Error while inserting data");
+            }
+        });
+    }
+
+</script>

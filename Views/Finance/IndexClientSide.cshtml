@@ -1,0 +1,71 @@
+﻿<div>
+    <div class="col-md-4"></div>
+    <div class="col-md-8"><h3>Finance -Client Side Binding </h3></div>
+</div>
+<br />
+<br />
+<br />
+@*<link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+<link href="~/Content/jquery-ui.css" rel="stylesheet" />
+<script src="~/Scripts/bootstrap.js"></script>
+<script src="~/Scripts/jquery-3.4.1.js"></script>
+<script src="~/Scripts/jquery-1.10.2.js"></script>
+<script src="~/Scripts/jquery-3.1.1.js"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
+<script src="~/Scripts/jquery-ui.js"></script>
+<script src="~/Scripts/bootstrap.min.js"></script>*@
+
+<div class="row">
+    <div class="row" id="formId"></div>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-9"></div>
+        <div class="col-md-3"> <input type="button" value="Add" id="btnAdd" /></div>
+    </div>
+
+    <div class="row"><div id="gridId"></div></div>
+
+</div>
+
+<script>
+   
+    debugger;
+    $(document).ready(function () {
+        $('#DateOfJoining').datepicker({
+            dateFormat: "dd/M/yy",
+            changeMonth: true,
+            changeYear: true,
+            yearRange: "-60:+0"
+        });
+        debugger;
+        BindGrid();
+        $("#btnAdd").click(function () {
+            debugger;
+            GetFormDetails(0);
+           // BindForm();
+        });
+
+
+
+
+    });
+    function BindGrid() {
+        debugger;
+        $.ajax({
+            type: "Get",
+            url: '@Url.Action("GetGridInfo", "Finance")',
+
+            success: function (data) {
+                debugger;
+                $('#formId').empty();
+                $('#gridId').html(data)
+            },
+            error: function () {
+                alert("Error while inserting data");
+            }
+        });
+    }
+</script>

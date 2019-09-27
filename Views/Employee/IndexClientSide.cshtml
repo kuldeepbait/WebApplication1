@@ -1,0 +1,65 @@
+﻿
+@{
+    ViewBag.Title = "FormCRUDClientSide";
+}
+<label id="lblHeader" ></label>
+<label id="lblHeader1"  class="example">kuldeep</label>
+<input type="button"  id="btn" value="button" />
+<input type="button" class="buttnClick" id="btn1" value="button1" />
+<input type="button" id="btnClear1" value="Cancel" />
+<div>
+    <div class="col-md-4"></div>
+    <div class="col-md-8"><h3>Client Side Binding </h3></div>
+  
+</div>
+<br />
+<br />
+<br />
+@Styles.Render("~/Content/css")
+@Scripts.Render("~/bundles/employee")
+@*<script src="~/Scripts/Employee/Employee.js"></script>
+<script src="~/Scripts/Employee/Form.js"></script>
+<script src="~/Scripts/Employee/Grid.js"></script>*@
+
+<div class="row">
+    <select id="drodown"></select>
+</div>
+<div class="row">
+    <div class="row" id="formId"></div>
+</div>
+
+<div class="container">
+    <div class="row">
+     <div class="col-md-9"></div>
+        <div class="col-md-3"> <input type="button" value="Add" id="btnAdd" /></div></div>
+
+    <div class="row"><div id="gridId"></div></div>
+
+</div>
+<script>
+    debugger;
+
+    document.getElementById("lblHeader").innerText = "Total Hei1234";
+    document.getElementsByClassName("example").innerText = "kuldeep123";
+    document.getElementById("btn").addEventListener("click", myScript);
+   
+    function myScript() {
+        alert(1)
+    }
+    debugger;
+    $.ajax({
+        url: 'http://localhost:55790/api/GetCityList',
+        type: "GET",
+        dataType: "JSON",
+        data: "",
+        success: function (cities) {
+            debugger;
+            $("#drodown").html(""); // clear before appending new list
+            $.each(cities, function (i, city) {
+                $("#drodown").append(
+                    $('<option></option>').val(city.Id).html(city.CityName));
+            });
+        }
+    });
+
+</script>

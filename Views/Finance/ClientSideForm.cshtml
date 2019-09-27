@@ -1,0 +1,100 @@
+﻿
+@model WebApplication1.Models.EmployeeModel
+
+@using (Html.BeginForm("SaveGridDetails", "Employee", new { id = "formPostId" }))
+{
+
+    <div class="container">
+        <div class="form-group row">
+            @Html.HiddenFor(m => m.id)
+        </div>
+        <div class="form-group row">
+            <div class="col-md-2"></div>
+            <div class="col-md-2">@Html.LabelFor(m => m.name)</div>
+            <div class="col-md-8">
+                @Html.TextBoxFor(m => m.name)
+                @Html.ValidationMessageFor(m => m.name, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-md-2"></div>
+            <div class="col-md-2">@Html.LabelFor(m => m.Salary)</div>
+            <div class="col-md-8">
+                @Html.TextBoxFor(m => m.Salary)
+                @Html.ValidationMessageFor(m => m.Salary, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-md-2"></div>
+            <div class="col-md-2">@Html.LabelFor(m => m.Email)</div>
+            <div class="col-md-8">
+                @Html.TextBoxFor(m => m.Email)
+                @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-md-2"></div>
+            <div class="col-md-2">@Html.LabelFor(m => m.DateOfJoining)</div>
+            <div class="col-md-8">
+                @Html.TextBoxFor(m => m.DateOfJoining)
+                @Html.ValidationMessageFor(m => m.DateOfJoining, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-md-2"></div>
+            <div class="col-md-2">@Html.LabelFor(m => m.Gender)</div>
+            <div class="col-md-8">
+                @Html.RadioButtonFor(m => m.Gender, "M")  Male
+                @Html.RadioButtonFor(m => m.Gender, "F")  Female
+                @Html.ValidationMessageFor(m => m.Gender, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-md-2"></div>
+            <div class="col-md-2">@Html.LabelFor(m => m.City)</div>
+            <div class="col-md-8">
+                @Html.DropDownListFor(model => model.cityId, (IEnumerable<SelectListItem>)ViewBag.CityList, "Select City", new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(m => m.cityId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-md-2"></div>
+            <div class="col-md-2">@Html.LabelFor(m => m.File)</div>
+            <div class="col-md-8">
+                @Html.TextBoxFor(model => model.File, new { type = "file" })
+                @Html.ValidationMessageFor(m => m.File, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-md-2"></div>
+            <div class="col-md-2"></div>
+            <div class="col-md-1"><input type="submit" id="btnSave" value="Save" /></div>
+            <div class="col-md-7"><input type="button" id="btnClear" value="Clear" /></div>
+        </div>
+    </div>
+}
+<script>
+    $("#btnSave").click(function () {
+        debugger;
+        var emp = {};
+        emp.id = $("#id").val();
+        emp.name = $("#name").val();
+        emp.Salary = $("#Salary").val();
+
+        $.ajax({
+            type: "POST",
+            url: 'http://localhost:55790/api/SaveEmployee', //'@Url.Action("SaveGridDetails", "Finance")',
+            data: { emp: emp },
+
+            success: function (data) {
+                debugger;
+                $('.container').show();
+                BindGrid();
+            },
+            error: function () {
+                alert("Error while inserting data");
+            }
+        });
+        return false;
+    });
+</script>

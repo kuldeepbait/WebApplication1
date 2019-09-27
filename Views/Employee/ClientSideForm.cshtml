@@ -1,0 +1,81 @@
+﻿@model WebApplication1.Models.EmployeeModel
+
+@*@using (Html.BeginForm("SaveGridDetails", "Employee",new {  id = "formPostId"})){*@
+@using (Ajax.BeginForm("SaveGridDetails", "Employee",  new AjaxOptions {  HttpMethod = "POST", OnSuccess = "baseObj.form.OnSuccess", OnFailure = "OnFailure" }, new { id = "formPostId", enctype = "multipart/form-data" }))
+{
+<div class="container">
+    <div class="form-group row">
+        @Html.HiddenFor(m => m.id, new { @readonly = "readonly" })
+    </div>
+    <div class="form-group row">
+        <div class="col-md-2"></div>
+        <div class="col-md-2">@Html.LabelFor(m => m.name)</div>
+        <div class="col-md-8">
+            @Html.TextBoxFor(m => m.name)
+            @Html.ValidationMessageFor(m => m.name, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group row">
+        <div class="col-md-2"></div>
+        <div class="col-md-2">@Html.LabelFor(m => m.Salary)</div>
+        <div class="col-md-8">
+            @Html.TextBoxFor(m => m.Salary)
+            @Html.ValidationMessageFor(m => m.Salary, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group row">
+        <div class="col-md-2"></div>
+        <div class="col-md-2">@Html.LabelFor(m => m.Email)</div>
+        <div class="col-md-8">
+            @Html.TextBoxFor(m => m.Email)
+            @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group row">
+        <div class="col-md-2"></div>
+        <div class="col-md-2">@Html.LabelFor(m => m.DateOfJoining)</div>
+         <div class="col-md-8">
+            @Html.TextBoxFor(m => m.DateOfJoining)
+            @Html.ValidationMessageFor(m => m.DateOfJoining, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group row">
+        <div class="col-md-2"></div>
+        <div class="col-md-2">@Html.LabelFor(m => m.Gender)</div>
+        <div class="col-md-8">
+            @Html.RadioButtonFor(m => m.Gender, "M")  Male
+            @Html.RadioButtonFor(m => m.Gender, "F")  Female
+            @Html.ValidationMessageFor(m => m.Gender, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group row">
+        <div class="col-md-2"></div>
+        <div class="col-md-2">@Html.LabelFor(m => m.City)</div>
+        <div class="col-md-8">
+            @Html.DropDownListFor(M => M.cityId, new SelectList(Model.listCity, "Id", "CityName"))
+
+            @*@Html.DropDownListFor(model => model.cityId, (IEnumerable<SelectListItem>)ViewBag.CityList, "Select City", new { htmlAttributes = new { @class = "form-control" } })*@
+            @Html.ValidationMessageFor(m => m.cityId, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group row">
+        <div class="col-md-2"></div>
+        <div class="col-md-2">@Html.LabelFor(m => m.File)</div>
+        <div class="col-md-8">
+            @Html.TextBoxFor(model => model.File, new { type = "file" })
+            @Html.ValidationMessageFor(m => m.File, "", new { @class = "text-danger" })
+        </div>
+    </div>
+   @foreach (var item in Model.listAttachment)
+   {
+      <a href="@Url.Action("DownLoad", "Employee",new { attachId = item.Id })">@item.FileName</a>
+    
+   }
+    <div class="form-group row">
+        <div class="col-md-2"></div>
+        <div class="col-md-2"></div>
+        <div class="col-md-1"><input type="button" id="btnSave1" value="Save" /></div>
+        <div class="col-md-7"><input type="button" id="btnClear" value="Cancel" /></div>
+    </div>
+</div>
+}

@@ -240,3 +240,6 @@ ModelManifest.xml
 
 # FAKE - F# Make
 .fake/
+/kuldeepbait/MVC/
+/MVC/
+/MVC-Project/
