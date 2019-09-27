@@ -18,8 +18,6 @@ namespace WebApplication1
                          "~/Scripts/Employee/Form.js",
                           "~/Scripts/Employee/Grid.js"));
 
-
-
             BundleTable.EnableOptimizations = true;
         }
       
